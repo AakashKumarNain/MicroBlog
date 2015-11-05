@@ -5,8 +5,8 @@ from .forms import LoginForm
 from .models import User,db
 
 @lm.user_loader
-def load_user(uid):
-    return User.objects.get(int(uid))
+def load_user(id):
+    return User.objects.get(id = id)
 
 @app.before_request
 def before_request():
@@ -23,7 +23,9 @@ def index():
     title = 'Welcome'
     return render_template('index.html',
                            user = user,
-                           title=title)
+                           title=title,
+                           posts=user.post,
+                           email=user.email)
 
 
 @app.route('/login', methods =['GET','POST'])
@@ -48,7 +50,7 @@ def after_login(resp):
         flash("Invalid login")
         return redirect (url_for('login'))
 
-    user = User.objects.get(email=resp.email).findOne()
+    user = User.objects.get(email=resp.email)
 
     if user is None:
         nickname = resp.nickname
@@ -66,3 +68,8 @@ def after_login(resp):
 
     login_user(user , remember = remember_me)
     return redirect(request.args.get('next') or url_for('index'))
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
