@@ -6,6 +6,6 @@ The code in this repository shows how to create a small micro-blog using flask. 
 * Python 3.4.xx (or higher version)
 * Flask
 * Jinja
-* A database of your choice (though syntax for database operations will change according the type of database used)
+* A database of your choice (though syntax for database operations will change according to the type of database used)
 
 `run.py` is used for running up the server.  
